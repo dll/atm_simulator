@@ -12,8 +12,9 @@ public class Controller {
 	private ViewDeposit viewDeposit;
 	private ViewView viewView;
 	private ViewSelect viewSelect;
+	private ViewDelete viewDelete;
 	
-	public Controller(Model myModel, ViewMenu myViewMenu, ViewCreate myViewCreate,ViewDeposit myViewDeposit, ViewView myViewView, ViewSelect myViewSelect) 
+	public Controller(Model myModel, ViewMenu myViewMenu, ViewCreate myViewCreate,ViewDeposit myViewDeposit, ViewView myViewView, ViewSelect myViewSelect, ViewDelete myViewDelete) 
 	{
 		model = myModel;
 		viewMenu = myViewMenu;
@@ -21,11 +22,13 @@ public class Controller {
 		viewDeposit = myViewDeposit;
 		viewView = myViewView;
 		viewSelect = myViewSelect;
+		viewDelete =  myViewDelete;
 		
 		viewMenu.addCreateListener((ActionEvent e) -> onClickCreate(e));
 		viewMenu.addDepositActionListener((ActionEvent e) -> onClickDeposit(e));
 		viewMenu.addViewActionListener((ActionEvent e) -> onClickView(e));
 		viewMenu.addSelectActionListener((ActionEvent e) -> onClickSelect(e));
+		viewMenu.addDeleteActionListener((ActionEvent e) -> onClickDelete(e));
 		
 		viewCreate.addCancelListener((ActionEvent e) -> onClickCancel(e));
 		viewCreate.addOkListener((ActionEvent e) -> onClickOk(e));
@@ -37,6 +40,9 @@ public class Controller {
 		
 		viewSelect.addOkActionListener((ActionEvent e) -> onClickOkSelect(e));
 		viewSelect.addCancelActionListener((ActionEvent e) -> onClickCancelSelect(e));
+		
+		viewDelete.addDeleteActionListener((ActionEvent e) -> onClickDeleteDelete(e));
+		viewDelete.addCancelActionListener((ActionEvent e) -> onClickCancelDelete(e));
 	}
 	
 	//----------------------------------------event handlers
@@ -69,7 +75,13 @@ public class Controller {
 		viewSelect.populateList(model.getAccountDescriptions());
 		viewMenu.setVisible(false);
 		viewSelect.setVisible(true);
-		
+	}
+
+	public void onClickDelete(ActionEvent e) 
+	{
+		viewDelete.setDescription(model.getCurrentAccountDesctiption());
+		viewMenu.setVisible(false);
+		viewDelete.setVisible(true);
 	}
 	
 	//CREATE VIEW
@@ -147,4 +159,24 @@ public class Controller {
 		viewSelect.setVisible(false);
 		viewMenu.setVisible(true);
 	}
+	
+	//VIEW Delete
+	
+	public void onClickDeleteDelete(ActionEvent e)
+	{
+		model.deleteAccount();
+		System.out.println(model.getAccounts().size()-1);
+		model.setCurrentAccountIndex(model.getAccounts().size()-1);
+		viewDelete.setVisible(false);
+		viewMenu.setVisible(true);
+	}
+	
+	
+	public void onClickCancelDelete(ActionEvent e) 
+	{
+		viewDelete.setVisible(false);
+		viewMenu.setVisible(true);
+	}
+	
+	
 }

@@ -21,6 +21,8 @@ public class ViewMenu extends JFrame {
 	private JButton btnDeposit;
 	private JButton btnView;
 	private JButton btnSelect;
+	private JButton btnDelete;
+	private JButton btnWithdraw;
 	
 	public ViewMenu(Model myModel) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -33,13 +35,12 @@ public class ViewMenu extends JFrame {
 		
 		btnDeposit = new JButton("deposit");
 		
-		JButton btnWithdraw = new JButton("withdraw");
+		btnWithdraw = new JButton("withdraw");
 		btnWithdraw.setEnabled(false);
 		
 		btnCreate = new JButton("create");
 		
-		JButton btnDelete = new JButton("delete");
-		btnDelete.setEnabled(false);
+		btnDelete = new JButton("delete");
 		
 		btnView = new JButton("view");
 		
@@ -99,5 +100,9 @@ public class ViewMenu extends JFrame {
 	public void addSelectActionListener(ActionListener selectActionListener) 
 	{
 		btnSelect.addActionListener(selectActionListener);
+	}
+	public void addDeleteActionListener(ActionListener deleteActionListener) 
+	{
+		btnDelete.addActionListener(deleteActionListener);
 	}
 }

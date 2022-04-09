@@ -74,7 +74,10 @@ public class Model {
 	
 	public String reportCurrentAccountTransactions()
 	{
-		String strOutput = "Current Balance: $" +  accounts.get(currentAccountIndex).getCurrentBalance();
+		
+		
+		String strOutput = "Account Description:  " + accounts.get(currentAccountIndex).getDescription() + "\n";
+				strOutput += "Current Balance: $" +  accounts.get(currentAccountIndex).getCurrentBalance();
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");  
 		 
@@ -90,6 +93,19 @@ public class Model {
 			
 		}
 		return strOutput;
+	}
+	
+	public String getCurrentAccountDesctiption()
+	{
+		
+		
+		return accounts.get(currentAccountIndex).getDescription();
+				
+	}
+	
+	public void deleteAccount()
+	{
+		accounts.remove(currentAccountIndex);
 	}
 	
 	//-------------------------------------------------private methods
