@@ -1,3 +1,4 @@
+package views;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
@@ -11,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
+import modelController.*;
 
 public class ViewDeposit extends JFrame {
 

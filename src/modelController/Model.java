@@ -1,6 +1,12 @@
+package modelController;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
+
+import customClasses.Account;
+import customClasses.Savings;
 
 
 public class Model {
@@ -23,18 +29,35 @@ public class Model {
 		return accounts;
 	}
 	
+	//Function that returns the descriptions of the accounts
+	public DefaultListModel getAccountDescriptions()
+	{
+		DefaultListModel listModel;
+		
+		listModel = new DefaultListModel();
+		
+		for(int i=0; i<accounts.size(); i++)
+		{
+			listModel.addElement(accounts.get(i).getDescription());
+		}
+		
+		return listModel;
+	}
 	
+	public void setCurrentAccountIndex(int myCurrentAccountIndex)
+	{
+		currentAccountIndex = myCurrentAccountIndex;
+	}
 	
+	//------------------------------------------------public methods
 	public void createAccount(String description, String amount, String Type)
 	{
-		if(Type == "SAVINGS")
+		if(Type == "Savings Account")
 		{
 			savingsAccount = new Savings(description);
 			savingsAccount.setCurrentBalance(Double.parseDouble(amount));
 			accounts.add(savingsAccount);
 			currentAccountIndex =  accounts.size() - 1;
-			
-			System.out.println(currentAccountIndex);
 		}
 		else
 		{
@@ -72,7 +95,7 @@ public class Model {
 	//-------------------------------------------------private methods
 	
 	
-	//------------------------------------------------public methods
+
 	
 	
 }

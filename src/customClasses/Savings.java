@@ -1,3 +1,4 @@
+package customClasses;
 
 public class Savings extends Account {
 	public final static double FEE = 0.50;

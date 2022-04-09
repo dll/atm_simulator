@@ -1,3 +1,4 @@
+package views;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
@@ -10,6 +11,7 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import modelController.*;
 public class ViewMenu extends JFrame {
 
 	private JPanel contentPane;
@@ -18,6 +20,7 @@ public class ViewMenu extends JFrame {
 	private Model model;
 	private JButton btnDeposit;
 	private JButton btnView;
+	private JButton btnSelect;
 	
 	public ViewMenu(Model myModel) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,8 +29,7 @@ public class ViewMenu extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		JButton btnSelect = new JButton("select");
-		btnSelect.setEnabled(false);
+		btnSelect = new JButton("select");
 		
 		btnDeposit = new JButton("deposit");
 		
@@ -93,5 +95,9 @@ public class ViewMenu extends JFrame {
 	public void addViewActionListener(ActionListener viewActionListener) 
 	{
 		btnView.addActionListener(viewActionListener);
+	}
+	public void addSelectActionListener(ActionListener selectActionListener) 
+	{
+		btnSelect.addActionListener(selectActionListener);
 	}
 }
