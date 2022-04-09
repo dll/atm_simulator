@@ -1,6 +1,12 @@
+package modelController;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+
+import javax.swing.DefaultListModel;
+
+import customClasses.Account;
+import customClasses.Savings;
 
 
 public class Model {
@@ -23,18 +29,35 @@ public class Model {
 		return accounts;
 	}
 	
+	//Function that returns the descriptions of the accounts
+	public DefaultListModel getAccountDescriptions()
+	{
+		DefaultListModel listModel;
+		
+		listModel = new DefaultListModel();
+		
+		for(int i=0; i<accounts.size(); i++)
+		{
+			listModel.addElement(accounts.get(i).getDescription());
+		}
+		
+		return listModel;
+	}
 	
+	public void setCurrentAccountIndex(int myCurrentAccountIndex)
+	{
+		currentAccountIndex = myCurrentAccountIndex;
+	}
 	
+	//------------------------------------------------public methods
 	public void createAccount(String description, String amount, String Type)
 	{
-		if(Type == "SAVINGS")
+		if(Type == "Savings Account")
 		{
 			savingsAccount = new Savings(description);
 			savingsAccount.setCurrentBalance(Double.parseDouble(amount));
 			accounts.add(savingsAccount);
 			currentAccountIndex =  accounts.size() - 1;
-			
-			System.out.println(currentAccountIndex);
 		}
 		else
 		{
@@ -51,7 +74,10 @@ public class Model {
 	
 	public String reportCurrentAccountTransactions()
 	{
-		String strOutput = "Current Balance: $" +  accounts.get(currentAccountIndex).getCurrentBalance();
+		
+		
+		String strOutput = "Account Description:  " + accounts.get(currentAccountIndex).getDescription() + "\n";
+				strOutput += "Current Balance: $" +  accounts.get(currentAccountIndex).getCurrentBalance();
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");  
 		 
@@ -69,10 +95,23 @@ public class Model {
 		return strOutput;
 	}
 	
+	public String getCurrentAccountDesctiption()
+	{
+		
+		
+		return accounts.get(currentAccountIndex).getDescription();
+				
+	}
+	
+	public void deleteAccount()
+	{
+		accounts.remove(currentAccountIndex);
+	}
+	
 	//-------------------------------------------------private methods
 	
 	
-	//------------------------------------------------public methods
+
 	
 	
 }

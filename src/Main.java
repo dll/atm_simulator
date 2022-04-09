@@ -1,8 +1,9 @@
-import Views.ViewCreate;
+import modelController.Controller;
+import modelController.Model;
+import views.*;
 
 //TODO
 //Delete method on UML
-//Put model as parameter of view
 
 public class Main {
 
@@ -12,8 +13,9 @@ public class Main {
 			ViewCreate viewCreate = new ViewCreate(model);
 			ViewDeposit viewDeposit = new ViewDeposit(model);
 			ViewView viewView = new ViewView(model);
-			Controller controller = new Controller(model,viewMenu,viewCreate,viewDeposit,viewView);
-			
+			ViewSelect viewSelect = new ViewSelect(model);
+			ViewDelete viewDelete = new ViewDelete(model);
+			Controller controller = new Controller(model,viewMenu,viewCreate,viewDeposit,viewView,viewSelect,viewDelete);
 			viewMenu.setVisible(true);
 	}
 

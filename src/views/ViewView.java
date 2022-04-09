@@ -1,3 +1,4 @@
+package views;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
@@ -11,6 +12,8 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextArea;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
+
+import modelController.*;
 
 public class ViewView extends JFrame {
 

@@ -1,5 +1,6 @@
-package Views;
+package views;
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import java.awt.event.ActionListener;
 
@@ -16,6 +17,9 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.AbstractListModel;
 
+import modelController.*;
+import javax.swing.ListSelectionModel;
+
 public class ViewCreate extends JFrame {
 
 	private JPanel contentPane;
@@ -27,6 +31,7 @@ public class ViewCreate extends JFrame {
 	//the Model object of the MVC design pattern
 	private Model model;
 	private JButton btnOk;
+	private JList lstAccountType;
 	
 
 	/**
@@ -43,9 +48,10 @@ public class ViewCreate extends JFrame {
 		
 		btnCancel = new JButton("Cancel");
 		
-		JList lstAccountType = new JList();
+		lstAccountType = new JList();
+		lstAccountType.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		lstAccountType.setModel(new AbstractListModel() {
-			String[] values = new String[] {"Air Miles Account", "Saving Account"};
+			String[] values = new String[] {"Air Miles Account", "Savings Account"};
 			public int getSize() {
 				return values.length;
 			}
@@ -123,6 +129,7 @@ public class ViewCreate extends JFrame {
 	}
 	
 	//-------------------------------PUBLIC METHODS
+	
 	public String getDescription()
 	{
 		String description = txtDescription.getText();
@@ -135,6 +142,11 @@ public class ViewCreate extends JFrame {
 		String balance = txtStartingBalance.getText();
 		txtStartingBalance.requestFocusInWindow();
 		return balance;
+	}
+	
+	public String getAccountType()
+	{
+		return (String)lstAccountType.getSelectedValue();
 	}
 	
 	

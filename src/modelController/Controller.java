@@ -1,7 +1,8 @@
+package modelController;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-import Views.ViewCreate;
+import views.*;
 
 public class Controller {
 
@@ -10,23 +11,38 @@ public class Controller {
 	private ViewCreate viewCreate;
 	private ViewDeposit viewDeposit;
 	private ViewView viewView;
+	private ViewSelect viewSelect;
+	private ViewDelete viewDelete;
 	
-	public Controller(Model myModel, ViewMenu myViewMenu, ViewCreate myViewCreate,ViewDeposit myViewDeposit, ViewView myViewView) 
+	public Controller(Model myModel, ViewMenu myViewMenu, ViewCreate myViewCreate,ViewDeposit myViewDeposit, ViewView myViewView, ViewSelect myViewSelect, ViewDelete myViewDelete) 
 	{
 		model = myModel;
 		viewMenu = myViewMenu;
 		viewCreate = myViewCreate;
 		viewDeposit = myViewDeposit;
 		viewView = myViewView;
+		viewSelect = myViewSelect;
+		viewDelete =  myViewDelete;
 		
 		viewMenu.addCreateListener((ActionEvent e) -> onClickCreate(e));
 		viewMenu.addDepositActionListener((ActionEvent e) -> onClickDeposit(e));
 		viewMenu.addViewActionListener((ActionEvent e) -> onClickView(e));
+		viewMenu.addSelectActionListener((ActionEvent e) -> onClickSelect(e));
+		viewMenu.addDeleteActionListener((ActionEvent e) -> onClickDelete(e));
+		
 		viewCreate.addCancelListener((ActionEvent e) -> onClickCancel(e));
 		viewCreate.addOkListener((ActionEvent e) -> onClickOk(e));
+		
 		viewDeposit.addOkActionListener((ActionEvent e) -> onClickOkDeposit(e));
 		viewDeposit.addCancelActionListener((ActionEvent e) -> onClickCancelDeposit(e));
+		
 		viewView.addOkActionListener((ActionEvent e) -> onClickOkView(e));
+		
+		viewSelect.addOkActionListener((ActionEvent e) -> onClickOkSelect(e));
+		viewSelect.addCancelActionListener((ActionEvent e) -> onClickCancelSelect(e));
+		
+		viewDelete.addDeleteActionListener((ActionEvent e) -> onClickDeleteDelete(e));
+		viewDelete.addCancelActionListener((ActionEvent e) -> onClickCancelDelete(e));
 	}
 	
 	//----------------------------------------event handlers
@@ -53,18 +69,34 @@ public class Controller {
 		
 	}
 	
+	public void onClickSelect(ActionEvent e)
+	{
+		//populate list with the accounts descriptions
+		viewSelect.populateList(model.getAccountDescriptions());
+		viewMenu.setVisible(false);
+		viewSelect.setVisible(true);
+	}
+
+	public void onClickDelete(ActionEvent e) 
+	{
+		viewDelete.setDescription(model.getCurrentAccountDesctiption());
+		viewMenu.setVisible(false);
+		viewDelete.setVisible(true);
+	}
+	
 	//CREATE VIEW
 	//Ok button in Create View
 	public void onClickOk(ActionEvent e) 
 	{
 		String description = "";
 		String startingBalance;
+		String accountType ="";
 		try 
 		{
 			description = viewCreate.getDescription();
 			startingBalance = viewCreate.getStartingBalance(); 
-			
-			model.createAccount(description, startingBalance,"SAVINGS");
+			accountType = viewCreate.getAccountType();
+			model.createAccount(description, startingBalance,accountType);
 			
 			viewCreate.setVisible(false);
 			viewMenu.setVisible(true);
@@ -105,12 +137,46 @@ public class Controller {
 		viewMenu.setVisible(true);
 	}
 	
-	//VIEW view
+	//VIEW View
 	//Ok button in view view
 	public void onClickOkView(ActionEvent e)
 	{
 		viewView.setVisible(false);
 		viewMenu.setVisible(true);
 	}
+	
+	//VIEW Select
+	//Ok button in view select
+	public void onClickOkSelect(ActionEvent e)
+	{
+		model.setCurrentAccountIndex(viewSelect.getAccountSelectedIndex());
+		viewView.setVisible(false);
+		viewMenu.setVisible(true);
+	}
+	
+	public void onClickCancelSelect(ActionEvent e) 
+	{
+		viewSelect.setVisible(false);
+		viewMenu.setVisible(true);
+	}
+	
+	//VIEW Delete
+	
+	public void onClickDeleteDelete(ActionEvent e)
+	{
+		model.deleteAccount();
+		System.out.println(model.getAccounts().size()-1);
+		model.setCurrentAccountIndex(model.getAccounts().size()-1);
+		viewDelete.setVisible(false);
+		viewMenu.setVisible(true);
+	}
+	
+	
+	public void onClickCancelDelete(ActionEvent e) 
+	{
+		viewDelete.setVisible(false);
+		viewMenu.setVisible(true);
+	}
+	
 	
 }
