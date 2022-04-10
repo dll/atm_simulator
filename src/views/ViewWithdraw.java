@@ -16,6 +16,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.JButton;
 
 import modelController.Model;
+import java.awt.Color;
 
 public class ViewWithdraw extends JFrame {
 
@@ -25,13 +26,14 @@ public class ViewWithdraw extends JFrame {
 	private JTextField txtDescription;
 	private JButton btnOk;
 	private JButton btnCancel;
+	private JLabel lblError;
 
 	/**
 	 * Create the frame.
 	 */
 	public ViewWithdraw(Model myModel) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 518, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -49,22 +51,30 @@ public class ViewWithdraw extends JFrame {
 		btnOk = new JButton("Ok");
 		
 		btnCancel = new JButton("Cancel");
+		
+		lblError = new JLabel("");
+		lblError.setForeground(Color.RED);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(28)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-						.addComponent(lblTransaction, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(lblAmount, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
-					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
-							.addGap(31)
-							.addComponent(btnCancel))
-						.addComponent(txtAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtDescription, GroupLayout.DEFAULT_SIZE, 229, Short.MAX_VALUE))
+							.addGap(28)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
+								.addComponent(lblTransaction, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(lblAmount, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 62, GroupLayout.PREFERRED_SIZE)
+									.addGap(31)
+									.addComponent(btnCancel))
+								.addComponent(txtAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+								.addComponent(txtDescription, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblError, GroupLayout.PREFERRED_SIZE, 481, GroupLayout.PREFERRED_SIZE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
@@ -82,7 +92,9 @@ public class ViewWithdraw extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnOk)
 						.addComponent(btnCancel))
-					.addContainerGap(124, Short.MAX_VALUE))
+					.addGap(35)
+					.addComponent(lblError, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(57, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 		
@@ -90,17 +102,23 @@ public class ViewWithdraw extends JFrame {
 	}
 	
 	//----------------------PUBLIC METHODS
-		public String getAmount()
+		public JTextField getAmount()
 		{
-			return txtAmount.getText();
+			return txtAmount;
 		}
-		public String getDescription()
+		public JTextField getDescription()
 		{
-			return txtDescription.getText();
+			return txtDescription;
+		}
+		
+		public void setError(String myMessage)
+		{
+			lblError.setText(myMessage);
 		}
 		
 		public void reset()
 		{
+			lblError.setText("");
 			txtAmount.setText("");
 			txtDescription.setText("");
 		}

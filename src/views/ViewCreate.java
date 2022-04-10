@@ -19,6 +19,7 @@ import javax.swing.AbstractListModel;
 
 import modelController.*;
 import javax.swing.ListSelectionModel;
+import java.awt.Color;
 
 public class ViewCreate extends JFrame {
 
@@ -32,6 +33,7 @@ public class ViewCreate extends JFrame {
 	private Model model;
 	private JButton btnOk;
 	private JList lstAccountType;
+	private JLabel lblError;
 	
 
 	/**
@@ -39,7 +41,7 @@ public class ViewCreate extends JFrame {
 	 */
 	public ViewCreate(Model myModel) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 576, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -72,58 +74,60 @@ public class ViewCreate extends JFrame {
 		JLabel lblAccountDescription = new JLabel("Account Description:");
 		
 		JLabel lblStartBalance = new JLabel("Stariting Balance: $");
+		
+		lblError = new JLabel("");
+		lblError.setForeground(Color.RED);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblAccountType, GroupLayout.PREFERRED_SIZE, 77, GroupLayout.PREFERRED_SIZE)
-							.addGap(33))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-								.addComponent(lblStartBalance, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 94, Short.MAX_VALUE)
-								.addComponent(lblAccountDescription, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-							.addGap(18)))
-					.addGap(20)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lstAccountType, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE)
-							.addContainerGap())
-						.addGroup(Alignment.TRAILING, gl_contentPane.createParallelGroup(Alignment.LEADING)
-							.addGroup(gl_contentPane.createSequentialGroup()
-								.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
-								.addGap(18)
-								.addComponent(btnCancel)
-								.addContainerGap())
-							.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-								.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-									.addComponent(txtStartingBalance, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
-									.addComponent(txtDescription, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
-								.addContainerGap()))))
+							.addComponent(lblAccountType, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
+							.addGap(18))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+							.addComponent(lblStartBalance, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+							.addComponent(lblAccountDescription, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(38)
+							.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
+							.addGap(18)
+							.addComponent(btnCancel))
+						.addComponent(txtStartingBalance, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
+						.addComponent(txtDescription, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lstAccountType, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE))
+					.addGap(36))
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(61)
+					.addComponent(lblError, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(lstAccountType, GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE)
-						.addComponent(lblAccountType))
+						.addComponent(lblAccountType)
+						.addComponent(lstAccountType, GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))
 					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(txtDescription, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
+							.addGap(37)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(txtStartingBalance, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(lblStartBalance))
+								.addComponent(lblStartBalance)
+								.addComponent(txtStartingBalance, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 							.addGap(18)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(btnOk)
 								.addComponent(btnCancel)))
-						.addComponent(lblAccountDescription))
-					.addGap(60))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(lblAccountDescription)
+							.addComponent(txtDescription, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+					.addPreferredGap(ComponentPlacement.UNRELATED)
+					.addComponent(lblError, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+					.addGap(18))
 		);
 		contentPane.setLayout(gl_contentPane);
 		model = myModel;
@@ -131,23 +135,36 @@ public class ViewCreate extends JFrame {
 	
 	//-------------------------------PUBLIC METHODS
 	
-	public String getDescription()
+	public JTextField getDescription()
 	{
-		String description = txtDescription.getText();
-		txtDescription.requestFocusInWindow();
-		return description;
+		//String description = txtDescription.getText();
+		//txtDescription.requestFocusInWindow();
+		return txtDescription;
 	}
 	
-	public String getStartingBalance()
+	public JTextField getStartingBalance()
 	{
-		String balance = txtStartingBalance.getText();
-		txtStartingBalance.requestFocusInWindow();
-		return balance;
+		//String balance = txtStartingBalance.getText();
+		//txtStartingBalance.requestFocusInWindow();
+		return txtStartingBalance;
 	}
 	
 	public String getAccountType()
 	{
 		return (String)lstAccountType.getSelectedValue();
+	}
+	
+	public void setError(String myMessage)
+	{
+		lblError.setText(myMessage);
+	}
+	
+	public void reset()
+	{
+		lblError.setText("");
+		lstAccountType.setSelectedIndex(0);
+		txtDescription.setText("");
+		txtStartingBalance.setText("");
 	}
 	
 	

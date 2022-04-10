@@ -4,9 +4,13 @@ import views.*;
 
 //TODO
 //Delete method on UML,ask if there is destruction to do or something
-//Validations
-//Hacer los output lists no editables
+//When clic cancel error, no textfied validator to reset (Possible Solution on resetin view reset border color) 
 //Hacer Lista Scrollable
+//Poner formato $0.00 en reporte
+//When select, make it disappear
+//Menu buttons disabled when there is nothing (when done save do this)
+//Validate Withdraw not higher than current amount 
+//SAVE/LOAD save is when quit (ask Sean)
 
 
 public class Main {
