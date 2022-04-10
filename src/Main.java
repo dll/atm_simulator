@@ -15,7 +15,8 @@ public class Main {
 			ViewView viewView = new ViewView(model);
 			ViewSelect viewSelect = new ViewSelect(model);
 			ViewDelete viewDelete = new ViewDelete(model);
-			Controller controller = new Controller(model,viewMenu,viewCreate,viewDeposit,viewView,viewSelect,viewDelete);
+			ViewWithdraw viewWithdraw = new ViewWithdraw(model);
+			Controller controller = new Controller(model,viewMenu,viewCreate,viewDeposit,viewView,viewSelect,viewDelete, viewWithdraw);
 			viewMenu.setVisible(true);
 	}
 

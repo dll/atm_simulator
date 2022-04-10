@@ -62,7 +62,7 @@ public abstract class Account
 	
 	
 	//---------------------------------------abstract methods
-    public abstract void withdraw(float amount);
+    public abstract void withdraw(String myAmount, String myDescription);
 	
 	
 }

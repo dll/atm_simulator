@@ -13,8 +13,9 @@ public class Controller {
 	private ViewView viewView;
 	private ViewSelect viewSelect;
 	private ViewDelete viewDelete;
+	private ViewWithdraw viewWithdraw;
 	
-	public Controller(Model myModel, ViewMenu myViewMenu, ViewCreate myViewCreate,ViewDeposit myViewDeposit, ViewView myViewView, ViewSelect myViewSelect, ViewDelete myViewDelete) 
+	public Controller(Model myModel, ViewMenu myViewMenu, ViewCreate myViewCreate,ViewDeposit myViewDeposit, ViewView myViewView, ViewSelect myViewSelect, ViewDelete myViewDelete,ViewWithdraw myViewWithDraw) 
 	{
 		model = myModel;
 		viewMenu = myViewMenu;
@@ -23,12 +24,15 @@ public class Controller {
 		viewView = myViewView;
 		viewSelect = myViewSelect;
 		viewDelete =  myViewDelete;
+		viewWithdraw = myViewWithDraw;
 		
 		viewMenu.addCreateListener((ActionEvent e) -> onClickCreate(e));
 		viewMenu.addDepositActionListener((ActionEvent e) -> onClickDeposit(e));
 		viewMenu.addViewActionListener((ActionEvent e) -> onClickView(e));
 		viewMenu.addSelectActionListener((ActionEvent e) -> onClickSelect(e));
 		viewMenu.addDeleteActionListener((ActionEvent e) -> onClickDelete(e));
+		viewMenu.addWithdrawActionListener((ActionEvent e) -> onClickWithdraw(e));
+		viewMenu.addQuitActionListener((ActionEvent e) -> onClickQuit(e));
 		
 		viewCreate.addCancelListener((ActionEvent e) -> onClickCancel(e));
 		viewCreate.addOkListener((ActionEvent e) -> onClickOk(e));
@@ -43,6 +47,9 @@ public class Controller {
 		
 		viewDelete.addDeleteActionListener((ActionEvent e) -> onClickDeleteDelete(e));
 		viewDelete.addCancelActionListener((ActionEvent e) -> onClickCancelDelete(e));
+		
+		viewWithdraw.addOkActionListener((ActionEvent e) -> onClickOkWithdraw(e));
+		viewWithdraw.addCancelActionListener((ActionEvent e) -> onClickCancelWithdraw(e));
 	}
 	
 	//----------------------------------------event handlers
@@ -59,6 +66,12 @@ public class Controller {
 	{
 		viewMenu.setVisible(false);
 		viewDeposit.setVisible(true);
+	}
+	
+	public void onClickWithdraw(ActionEvent e) 
+	{
+		viewMenu.setVisible(false);
+		viewWithdraw.setVisible(true);
 	}
 	
 	public void onClickView(ActionEvent e)
@@ -82,6 +95,11 @@ public class Controller {
 		viewDelete.setDescription(model.getCurrentAccountDesctiption());
 		viewMenu.setVisible(false);
 		viewDelete.setVisible(true);
+	}
+	
+	public void onClickQuit(ActionEvent e) 
+	{
+		viewMenu.dispose();
 	}
 	
 	//CREATE VIEW
@@ -123,6 +141,7 @@ public class Controller {
 		String depositAmount =  viewDeposit.getAmount();
 		String description = viewDeposit.getDescription(); 
 		
+		//here shoul be sent the type of account, maybe
 		model.deposit(depositAmount, description);
 		
 		viewDeposit.setVisible(false);
@@ -178,5 +197,26 @@ public class Controller {
 		viewMenu.setVisible(true);
 	}
 	
+	//WITHDRAW VIEW	
+	//OK button in deposit view
+	public void onClickOkWithdraw(ActionEvent e)
+	{
+		String depositAmount =  viewWithdraw.getAmount();
+		String description = viewWithdraw.getDescription(); 
+		
+		//here shoul be sent the type of account, maybe
+		model.withdraw(depositAmount, description);
+		
+		viewWithdraw.setVisible(false);
+		viewMenu.setVisible(true);
+		viewWithdraw.reset();
+	}
+	
+	public void onClickCancelWithdraw(ActionEvent e) 
+	{
+		viewWithdraw.reset();
+		viewWithdraw.setVisible(false);
+		viewMenu.setVisible(true);
+	}
 	
 }

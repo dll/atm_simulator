@@ -23,6 +23,7 @@ public class ViewMenu extends JFrame {
 	private JButton btnSelect;
 	private JButton btnDelete;
 	private JButton btnWithdraw;
+	private JButton btnQuit;
 	
 	public ViewMenu(Model myModel) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -36,7 +37,6 @@ public class ViewMenu extends JFrame {
 		btnDeposit = new JButton("deposit");
 		
 		btnWithdraw = new JButton("withdraw");
-		btnWithdraw.setEnabled(false);
 		
 		btnCreate = new JButton("create");
 		
@@ -44,28 +44,28 @@ public class ViewMenu extends JFrame {
 		
 		btnView = new JButton("view");
 		
-		JButton btnQuit = new JButton("quit");
+		btnQuit = new JButton("quit");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(38)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(btnSelect, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(btnDeposit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(btnWithdraw, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(btnCreate, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(btnDelete, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(btnView, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnQuit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-					.addContainerGap(315, Short.MAX_VALUE))
+						.addComponent(btnQuit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(btnSelect, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE))
+					.addContainerGap(296, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
-					.addContainerGap(44, Short.MAX_VALUE)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(44)
 					.addComponent(btnSelect)
-					.addGap(18)
+					.addPreferredGap(ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
 					.addComponent(btnDeposit)
 					.addGap(18)
 					.addComponent(btnWithdraw)
@@ -104,5 +104,13 @@ public class ViewMenu extends JFrame {
 	public void addDeleteActionListener(ActionListener deleteActionListener) 
 	{
 		btnDelete.addActionListener(deleteActionListener);
+	}
+	public void addWithdrawActionListener(ActionListener withdrawActionListener) 
+	{
+		btnWithdraw.addActionListener(withdrawActionListener);
+	}
+	public void addQuitActionListener(ActionListener quitActionListener) 
+	{
+		btnQuit.addActionListener(quitActionListener);
 	}
 }
