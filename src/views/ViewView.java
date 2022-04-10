@@ -35,6 +35,7 @@ public class ViewView extends JFrame {
 		setContentPane(contentPane);
 		
 		txtReport = new JTextArea();
+		txtReport.setEditable(false);
 		
 		btnOk = new JButton("OK");
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);

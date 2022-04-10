@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class Savings extends Account {
-	public final static double FEE = 0.50;
+	private final static double FEE = 0.50;
 	
 	public Savings(String myDescription)
 	{

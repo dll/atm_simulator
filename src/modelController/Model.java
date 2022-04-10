@@ -5,8 +5,7 @@ import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 
-import customClasses.Account;
-import customClasses.Savings;
+import customClasses.*;
 
 
 public class Model {
@@ -14,6 +13,7 @@ public class Model {
 	ArrayList<Account> accounts;
 	private int currentAccountIndex;
 	private Savings savingsAccount;
+	private AirMilesAccount airMilesAccount;
 	
 	Account ac;
 	public Model()
@@ -61,7 +61,10 @@ public class Model {
 		}
 		else
 		{
-			//create airmiles account
+			airMilesAccount = new AirMilesAccount(description);
+			airMilesAccount.setCurrentBalance(Double.parseDouble(amount));
+			accounts.add(airMilesAccount);
+			currentAccountIndex =  accounts.size() - 1;
 		}
 	}
 	
@@ -78,12 +81,32 @@ public class Model {
 	public String reportCurrentAccountTransactions()
 	{
 		
+		String strOutput = "";
+		String accountType ="";
+		if(accounts.get(currentAccountIndex) instanceof Savings)
+		{
+			
+			accountType = "Savings Account";
+		}
+		else
+		{
+			accountType = "Airmiles Savings Account";
+		}
 		
-		String strOutput = "Account Description:  " + accounts.get(currentAccountIndex).getDescription() + "\n";
-				strOutput += "Current Balance: $" +  accounts.get(currentAccountIndex).getCurrentBalance();
+		strOutput = accountType + "\n";
+		
+		if(accounts.get(currentAccountIndex) instanceof AirMilesAccount)
+		{
+			strOutput += "Airmiles Balance: " + ((AirMilesAccount)accounts.get(currentAccountIndex)).getAirmilesBalance() + "\n";
+		}
+		
+		strOutput += "Account Description:  " + accounts.get(currentAccountIndex).getDescription() + "\n";
+		
+		strOutput += "Account Type: " + accountType + "\n";
+		
+		strOutput += "Current Balance: $" +  accounts.get(currentAccountIndex).getCurrentBalance();
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");  
-		 
 		
 		for (int n=0; n < accounts.get(currentAccountIndex).getTransactions().size(); n++) 
 		{
