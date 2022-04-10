@@ -16,6 +16,7 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.ListSelectionModel;
 import modelController.Model;
+import java.awt.Color;
 
 public class ViewSelect extends JFrame {
 
@@ -24,6 +25,7 @@ public class ViewSelect extends JFrame {
 	private Model model;
 	private JButton btnCancel;
 	private JButton btnOk;
+	private JLabel lblError;
 	
 	/**
 	 * Create the frame.
@@ -44,20 +46,28 @@ public class ViewSelect extends JFrame {
 		btnOk = new JButton("Ok");
 		
 		btnCancel = new JButton("Cancel");
+		
+		lblError = new JLabel("");
+		lblError.setForeground(Color.RED);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
-					.addComponent(lblSelect)
-					.addGap(32)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
-							.addGap(28)
-							.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))
-						.addComponent(lstAccounts, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE))
-					.addContainerGap(120, Short.MAX_VALUE))
+							.addContainerGap()
+							.addComponent(lblSelect)
+							.addGap(32)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 75, GroupLayout.PREFERRED_SIZE)
+									.addGap(28)
+									.addComponent(btnCancel, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE))
+								.addComponent(lstAccounts, GroupLayout.PREFERRED_SIZE, 149, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(51)
+							.addComponent(lblError, GroupLayout.PREFERRED_SIZE, 349, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap(26, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -70,7 +80,8 @@ public class ViewSelect extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnOk)
 						.addComponent(btnCancel))
-					.addContainerGap(33, Short.MAX_VALUE))
+					.addPreferredGap(ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+					.addComponent(lblError))
 		);
 		contentPane.setLayout(gl_contentPane);
 		model = myModel;
@@ -88,6 +99,12 @@ public class ViewSelect extends JFrame {
 	{
 		return lstAccounts.getSelectedIndex();
 	}
+	
+	public void setError(String myMessage)
+	{
+		lblError.setText(myMessage);
+	}
+	
 	
 	
 	//--------------------LISTENERS

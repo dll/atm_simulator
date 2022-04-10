@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import modelController.*;
+import java.awt.Color;
 
 public class ViewDeposit extends JFrame {
 
@@ -23,13 +24,14 @@ public class ViewDeposit extends JFrame {
 	private JButton btnOk;
 	
 	Model model;
+	private JLabel lblError;
 
 	
 	public ViewDeposit(Model myModel) {
 		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 569, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -47,6 +49,9 @@ public class ViewDeposit extends JFrame {
 		
 		txtDescription = new JTextField();
 		txtDescription.setColumns(10);
+		
+		lblError = new JLabel("");
+		lblError.setForeground(Color.RED);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -56,15 +61,19 @@ public class ViewDeposit extends JFrame {
 						.addComponent(lblNewLabel_1, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(lblAmount, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 					.addGap(18)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(btnOk)
 							.addGap(18)
 							.addComponent(btnCancel))
-						.addGroup(Alignment.TRAILING, gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 							.addComponent(txtAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(txtDescription, GroupLayout.PREFERRED_SIZE, 224, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap(160, Short.MAX_VALUE))
+					.addContainerGap(59, Short.MAX_VALUE))
+				.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+					.addComponent(lblError, GroupLayout.PREFERRED_SIZE, 481, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -81,7 +90,9 @@ public class ViewDeposit extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnOk)
 						.addComponent(btnCancel))
-					.addContainerGap(122, Short.MAX_VALUE))
+					.addGap(18)
+					.addComponent(lblError, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(72, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 		
@@ -89,17 +100,24 @@ public class ViewDeposit extends JFrame {
 	}
 	
 	//----------------------PUBLIC METHODS
-	public String getAmount()
+	public JTextField getAmount()
 	{
-		return txtAmount.getText();
+		return txtAmount;
 	}
-	public String getDescription()
+	public JTextField getDescription()
 	{
-		return txtDescription.getText();
+		return txtDescription;
 	}
 	
+	public void setError(String myMessage)
+	{
+		lblError.setText(myMessage);
+	}
+	
+	//------------------------PUBLIC METHODS
 	public void reset()
 	{
+		lblError.setText("");
 		txtAmount.setText("");
 		txtDescription.setText("");
 	}
@@ -113,5 +131,6 @@ public class ViewDeposit extends JFrame {
 	{
 		btnCancel.addActionListener(cancelActionListener);
 	}
+	
 	
 }

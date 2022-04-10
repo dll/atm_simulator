@@ -2,10 +2,17 @@ package modelController;
 import java.awt.event.*;
 import java.util.ArrayList;
 
+import javax.swing.JTextField;
+
+import customClasses.TextFieldValidator;
 import views.*;
 
 public class Controller {
 
+	//For descriptions validation
+	TextFieldValidator tfvDescription;
+	TextFieldValidator tfvAmount;
+	
 	private Model model;
 	private ViewMenu viewMenu;
 	private ViewCreate viewCreate;
@@ -14,6 +21,10 @@ public class Controller {
 	private ViewSelect viewSelect;
 	private ViewDelete viewDelete;
 	private ViewWithdraw viewWithdraw;
+	
+	private final String VALIDDESCPATTERN = "^[a-zA-Z]+$";
+	private final String VALIDAMOUNTPATTERN = "\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d\\.\\d{2}";
+	private final String ERRORMESSAGE = "The description should only be letters and the amount shoul be in money format.";
 	
 	public Controller(Model myModel, ViewMenu myViewMenu, ViewCreate myViewCreate,ViewDeposit myViewDeposit, ViewView myViewView, ViewSelect myViewSelect, ViewDelete myViewDelete,ViewWithdraw myViewWithDraw) 
 	{
@@ -53,6 +64,27 @@ public class Controller {
 	}
 	
 	//----------------------------------------event handlers
+	public boolean validateFields(JTextField myDescription, JTextField myAmount)
+	{
+		tfvDescription = new TextFieldValidator(myDescription);
+		tfvDescription.setRegExp(VALIDDESCPATTERN);
+		
+		tfvAmount = new TextFieldValidator(myAmount);
+		tfvAmount.setRegExp(VALIDAMOUNTPATTERN);
+
+		tfvDescription.check();
+		tfvAmount.check();
+		
+		if(tfvDescription.check() && tfvAmount.check())
+		{
+			tfvDescription.reset();
+			tfvAmount.reset();
+			return true;
+		}
+		return false;
+			
+	}
+	
 	
 	//MENU
 	//Create button from the Menu View
@@ -106,29 +138,36 @@ public class Controller {
 	//Ok button in Create View
 	public void onClickOk(ActionEvent e) 
 	{
-		String description = "";
-		String startingBalance;
-		String accountType ="";
-		try 
+		
+		if(validateFields(viewCreate.getDescription(),viewCreate.getStartingBalance()))
 		{
-			description = viewCreate.getDescription();
-			startingBalance = viewCreate.getStartingBalance(); 
+			
+			viewCreate.setError("");
+			String description = "";
+			String startingBalance= "";
+			String accountType ="";
+			
+			description = viewCreate.getDescription().getText();
+			startingBalance = viewCreate.getStartingBalance().getText(); 
 			accountType = viewCreate.getAccountType();
 			model.createAccount(description, startingBalance,accountType);
-			
+				
+			viewCreate.reset();
 			viewCreate.setVisible(false);
-			viewMenu.setVisible(true);
-			
-		} 
-		catch(NumberFormatException except)
+			viewMenu.setVisible(true);	
+		}
+		else
 		{
-			//viewCreate.showError("Bad input: '" + userInput + "'");
+			viewCreate.setError(ERRORMESSAGE);
 		}
 		
 	}
 	//Cancel button from the Create View
 	public void onClickCancel(ActionEvent e) 
 	{
+		tfvDescription.reset();
+		tfvAmount.reset();
+		viewCreate.reset();
 		viewCreate.setVisible(false);
 		viewMenu.setVisible(true);
 	}
@@ -138,19 +177,30 @@ public class Controller {
 	//OK button in deposit view
 	public void onClickOkDeposit(ActionEvent e)
 	{
-		String depositAmount =  viewDeposit.getAmount();
-		String description = viewDeposit.getDescription(); 
 		
-		//here shoul be sent the type of account, maybe
-		model.deposit(depositAmount, description);
+		if(validateFields(viewDeposit.getDescription(),viewDeposit.getAmount()))
+		{
 		
-		viewDeposit.setVisible(false);
-		viewMenu.setVisible(true);
-		viewDeposit.reset();
+			viewDeposit.setError("");
+			String depositAmount =  viewDeposit.getAmount().getText();
+			String description = viewDeposit.getDescription().getText();
+			
+			model.deposit(depositAmount, description);
+			
+			viewDeposit.setVisible(false);
+			viewMenu.setVisible(true);
+			viewDeposit.reset();
+		}
+		else
+		{
+			viewDeposit.setError(ERRORMESSAGE);
+		}
 	}
 	
 	public void onClickCancelDeposit(ActionEvent e) 
 	{
+		tfvDescription.reset();
+		tfvAmount.reset();
 		viewDeposit.reset();
 		viewDeposit.setVisible(false);
 		viewMenu.setVisible(true);
@@ -168,13 +218,25 @@ public class Controller {
 	//Ok button in view select
 	public void onClickOkSelect(ActionEvent e)
 	{
-		model.setCurrentAccountIndex(viewSelect.getAccountSelectedIndex());
-		viewView.setVisible(false);
-		viewMenu.setVisible(true);
+		System.out.println();
+		
+		if(viewSelect.getAccountSelectedIndex() != -1)
+		{
+			viewSelect.setError("");
+			model.setCurrentAccountIndex(viewSelect.getAccountSelectedIndex());
+			viewView.setVisible(false);
+			viewMenu.setVisible(true);
+		}
+		else
+		{
+			viewSelect.setError("Select an account to continue");
+		}
+		
 	}
 	
 	public void onClickCancelSelect(ActionEvent e) 
 	{
+		viewSelect.setError("");
 		viewSelect.setVisible(false);
 		viewMenu.setVisible(true);
 	}
@@ -201,19 +263,28 @@ public class Controller {
 	//OK button in deposit view
 	public void onClickOkWithdraw(ActionEvent e)
 	{
-		String depositAmount =  viewWithdraw.getAmount();
-		String description = viewWithdraw.getDescription(); 
-		
-		//here shoul be sent the type of account, maybe
-		model.withdraw(depositAmount, description);
-		
-		viewWithdraw.setVisible(false);
-		viewMenu.setVisible(true);
-		viewWithdraw.reset();
+		if(validateFields(viewWithdraw.getDescription(),viewWithdraw.getAmount()))
+		{
+			String depositAmount =  viewWithdraw.getAmount().getText();
+			String description = viewWithdraw.getDescription().getText(); 
+			
+			model.withdraw(depositAmount, description);
+			
+			viewWithdraw.setVisible(false);
+			viewMenu.setVisible(true);
+			viewWithdraw.reset();
+		}
+		else
+		{
+			viewWithdraw.setError(ERRORMESSAGE);
+		}
 	}
 	
 	public void onClickCancelWithdraw(ActionEvent e) 
 	{
+		
+		tfvDescription.reset();
+		tfvAmount.reset();
 		viewWithdraw.reset();
 		viewWithdraw.setVisible(false);
 		viewMenu.setVisible(true);
