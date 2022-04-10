@@ -68,8 +68,11 @@ public class Model {
 	public void deposit(String description, String amount)
 	{
 		accounts.get(currentAccountIndex).deposit(description, amount);
-		
-		int x = 0;
+	}
+	
+	public void withdraw(String description, String amount)
+	{
+		accounts.get(currentAccountIndex).withdraw(description, amount);
 	}
 	
 	public String reportCurrentAccountTransactions()
@@ -97,10 +100,7 @@ public class Model {
 	
 	public String getCurrentAccountDesctiption()
 	{
-		
-		
 		return accounts.get(currentAccountIndex).getDescription();
-				
 	}
 	
 	public void deleteAccount()
