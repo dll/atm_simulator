@@ -59,6 +59,7 @@ public class ViewCreate extends JFrame {
 				return values[index];
 			}
 		});
+		lstAccountType.setSelectedIndex(0);
 		
 		txtDescription = new JTextField();
 		txtDescription.setColumns(10);

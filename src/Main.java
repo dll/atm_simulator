@@ -3,7 +3,11 @@ import modelController.Model;
 import views.*;
 
 //TODO
-//Delete method on UML
+//Delete method on UML,ask if there is destruction to do or something
+//Validations
+//Hacer los output lists no editables
+//Hacer Lista Scrollable
+
 
 public class Main {
 

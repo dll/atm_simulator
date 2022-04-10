@@ -36,6 +36,7 @@ public class ViewSelect extends JFrame {
 		setContentPane(contentPane);
 		
 		lstAccounts = new JList();
+		lstAccounts.setSelectedIndex(0);
 		lstAccounts.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		JLabel lblSelect = new JLabel("Select Account:");
