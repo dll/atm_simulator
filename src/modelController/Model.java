@@ -29,7 +29,7 @@ public class Model {
 		return accounts;
 	}
 	
-	//Function that returns the descriptions of the accounts
+	//Function that returns the descriptions of the accounts in the model of the list
 	public DefaultListModel getAccountDescriptions()
 	{
 		DefaultListModel listModel;

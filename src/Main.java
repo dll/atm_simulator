@@ -4,7 +4,7 @@ import views.*;
 
 //TODO
 //Delete method on UML,ask if there is destruction to do or something
-//When clic cancel error, no textfied validator to reset (Possible Solution on resetin view reset border color) 
+//When clic cancel error, no textfied validator to reset (Possible Solution on resetin view reset border color, or maybe just take out the reset of the validator) 
 //Hacer Lista Scrollable
 //Poner formato $0.00 en reporte
 //When select, make it disappear
