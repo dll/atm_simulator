@@ -29,6 +29,7 @@ public class FileManager {
 	//--------------------------------------------------public methods
 	public void save( ArrayList<Account> myAccounts)
 	{
+		
 		try 
 		{
 		
@@ -61,12 +62,12 @@ public class FileManager {
 	}
 	
 	//returns Object so pretty much anything
-	public ArrayList<Object> load()
+	public ArrayList<Account> load()
 	{
 		System.out.println("load");
 		
-		ArrayList<Object> myObjectsArray;
-		myObjectsArray = new ArrayList<Object>();
+		ArrayList<Account> myObjectsArray;
+		myObjectsArray = new ArrayList<Account>();
 		
 		try 
 		{
@@ -78,15 +79,15 @@ public class FileManager {
 				
 				ObjectInputStream dataStream = new ObjectInputStream(fileStream);
 	
-			    Object object =null;
+			    Account account =null;
 	
 			    boolean flag = true;
 	
 			    while(flag){
 			        if(fileStream.available() != 0)
 			        {
-			        	object = dataStream.readObject();    
-			        	myObjectsArray.add(object);
+			        	account = (Account)(dataStream.readObject());    
+			        	myObjectsArray.add(account);
 			        }
 			        else
 			        {

@@ -1,6 +1,7 @@
 package views;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JFrame;
@@ -13,6 +14,13 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 
 import modelController.*;
 import javax.swing.JLabel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 public class ViewMenu extends JFrame {
 
 	private JPanel contentPane;
@@ -34,9 +42,11 @@ public class ViewMenu extends JFrame {
 	private JLabel lblSaveAndQuit;
 	
 	public ViewMenu(Model myModel) {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 452, 379);
 		contentPane = new JPanel();
+		
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
@@ -53,6 +63,7 @@ public class ViewMenu extends JFrame {
 		btnView = new JButton("view");
 		
 		btnQuit = new JButton("quit");
+		
 		
 		lblNewLabel = new JLabel("Select Account");
 		
@@ -158,4 +169,32 @@ public class ViewMenu extends JFrame {
 	{
 		btnQuit.addActionListener(quitActionListener);
 	}
+	
+	
+	/*btnOk.addActionListener(new ActionListener() {
+		//Action Event is the click for a button
+    	public void actionPerformed(ActionEvent e) {
+			onSubmit(e);
+		}
+    });
+	
+	btnQuit.addMouseListener(new MouseAdapter() {
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		}
+	});
+    */
+	public void addLoadListener(WindowListener loadWindowsListener)
+	{
+		this.addWindowListener(loadWindowsListener);
+	}
+	
+	/*
+	addWindowListener(new WindowAdapter() {
+		@Override
+		public void windowOpened(WindowEvent e) {
+			model.loadAccounts();
+		}
+	});*/
+	
 }

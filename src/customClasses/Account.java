@@ -4,7 +4,8 @@ import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;  
 
 //abstract class because of the withdraw method
-public abstract class Account 
+
+public abstract class Account implements java.io.Serializable
 {
 	//Protected for it to be accessible anywhere
 	protected String description;

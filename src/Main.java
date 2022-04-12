@@ -11,6 +11,9 @@ import views.*;
 //Menu buttons disabled when there is nothing (when done save do this)
 //Validate Withdraw not higher than current amount 
 //SAVE/LOAD save is when quit (ask Sean)
+//Move window listner to controller
+//Only if you have time load the last account you were working with, its because the model starts with the curremtaccount user in 0
+
 
 
 public class Main {

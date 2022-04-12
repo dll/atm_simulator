@@ -1,5 +1,6 @@
 package modelController;
 import java.awt.event.*;
+
 import java.util.ArrayList;
 
 import javax.swing.JTextField;
@@ -44,6 +45,7 @@ public class Controller {
 		viewMenu.addDeleteActionListener((ActionEvent e) -> onClickDelete(e));
 		viewMenu.addWithdrawActionListener((ActionEvent e) -> onClickWithdraw(e));
 		viewMenu.addQuitActionListener((ActionEvent e) -> onClickQuit(e));
+		viewMenu.addLoadListener((WindowEvent e) -> {onWindowLoad(e);});
 		
 		viewCreate.addCancelListener((ActionEvent e) -> onClickCancel(e));
 		viewCreate.addOkListener((ActionEvent e) -> onClickOk(e));
@@ -131,9 +133,14 @@ public class Controller {
 	
 	public void onClickQuit(ActionEvent e) 
 	{
+		model.saveAccounts();
 		viewMenu.dispose();
 	}
 	
+	public void onWindowLoad(WindowEvent e) 
+	{
+		model.loadAccounts();
+	}
 	//CREATE VIEW
 	//Ok button in Create View
 	public void onClickOk(ActionEvent e) 
@@ -218,13 +225,11 @@ public class Controller {
 	//Ok button in view select
 	public void onClickOkSelect(ActionEvent e)
 	{
-		System.out.println();
-		
 		if(viewSelect.getAccountSelectedIndex() != -1)
 		{
 			viewSelect.setError("");
 			model.setCurrentAccountIndex(viewSelect.getAccountSelectedIndex());
-			viewView.setVisible(false);
+			viewSelect.setVisible(false);
 			viewMenu.setVisible(true);
 		}
 		else

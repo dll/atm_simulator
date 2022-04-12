@@ -131,7 +131,22 @@ public class Model {
 		accounts.remove(currentAccountIndex);
 	}
 	
-	//-------------------------------------------------private methods
+	
+	//Function that saves accounts on file through FileManager custom class
+	public void saveAccounts()
+	{
+		FileManager.getInstance().setFileName("accounts.dat");
+		FileManager.getInstance().save(accounts);
+	}
+	
+	//Function that loads accounts from file through FileManager custom class
+	public void loadAccounts()
+	{
+		FileManager.getInstance().setFileName("accounts.dat");
+		accounts = FileManager.getInstance().load();
+		
+	}
+	
 	
 	
 

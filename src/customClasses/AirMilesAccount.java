@@ -3,7 +3,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 
-public class AirMilesAccount extends Account
+public class AirMilesAccount extends Account implements java.io.Serializable
 {
 	private final static double FEE = 0.75;
 	private int airmilesBalance;
