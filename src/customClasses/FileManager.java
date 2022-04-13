@@ -64,7 +64,6 @@ public class FileManager {
 	//returns Object so pretty much anything
 	public ArrayList<Account> load()
 	{
-		System.out.println("load");
 		
 		ArrayList<Account> myObjectsArray;
 		myObjectsArray = new ArrayList<Account>();
@@ -120,6 +119,19 @@ public class FileManager {
 			instance = new FileManager();
 		}
 		return instance;
+	}
+	
+	public void deleteFileContent()
+	{
+		try 
+		{
+			new FileOutputStream(filename).close();
+		}
+		catch(Exception e)
+		{
+			System.out.println("Binary file output error:" + e.getMessage());
+		}
+		
 	}
 	
 }

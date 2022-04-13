@@ -40,11 +40,9 @@ public class AirMilesAccount extends Account implements java.io.Serializable
 	//override deposit method from parent
 	public void deposit(String myAmount, String myDescription)
 	{
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss yyyy");  
 		LocalDateTime now = LocalDateTime.now(); 
 				
-		
-		
 		int airmilesToAdd = (int) (Double.parseDouble(myAmount) / 30);
 		
 		System.out.println(airmilesToAdd);

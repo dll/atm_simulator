@@ -49,7 +49,8 @@ public abstract class Account implements java.io.Serializable
 	
 	public void deposit(String myAmount, String myDescription)
 	{
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
+		//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss yyyy");
 		LocalDateTime now = LocalDateTime.now(); 
 		
 		

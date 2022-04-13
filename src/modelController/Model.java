@@ -104,15 +104,17 @@ public class Model {
 		
 		strOutput += "Account Type: " + accountType + "\n";
 		
-		strOutput += "Current Balance: $" +  accounts.get(currentAccountIndex).getCurrentBalance();
+		strOutput += "Current Balance: $" + String.format("%-9.2f",accounts.get(currentAccountIndex).getCurrentBalance());
 		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");  
+		//strOutput += "Current Balance: $" +  accounts.get(currentAccountIndex).getCurrentBalance();
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss yyyy");  
 		
 		for (int n=0; n < accounts.get(currentAccountIndex).getTransactions().size(); n++) 
 		{
 			strOutput += "\n";
 			strOutput += dtf.format(accounts.get(currentAccountIndex).getTransactions().get(n).getDate());
-			strOutput += " $" + accounts.get(currentAccountIndex).getTransactions().get(n).getAmount();
+			strOutput += ": $" + String.format("%-9.2f",accounts.get(currentAccountIndex).getTransactions().get(n).getAmount());
 			strOutput += " [";
 			strOutput += accounts.get(currentAccountIndex).getTransactions().get(n).getDescription();
 			strOutput += "]";
@@ -140,13 +142,40 @@ public class Model {
 	}
 	
 	//Function that loads accounts from file through FileManager custom class
-	public void loadAccounts()
+	public boolean loadAccounts()
 	{
 		FileManager.getInstance().setFileName("accounts.dat");
-		accounts = FileManager.getInstance().load();
 		
+		if(FileManager.getInstance().load()!=null)
+		{
+			accounts = FileManager.getInstance().load();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
 	}
 	
+	//Function that deletes all of the content of a file
+	public void deleteFileContent()
+	{
+		FileManager.getInstance().setFileName("accounts.dat");
+		FileManager.getInstance().deleteFileContent();
+	}
+	
+	//Function that validates amount in withdraw
+	public boolean validateAmountWithdraw(String myAmount)
+	{
+		if(accounts.get(currentAccountIndex).getCurrentBalance() < Double.parseDouble(myAmount))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 	
 	
 

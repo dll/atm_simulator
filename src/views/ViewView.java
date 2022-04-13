@@ -14,6 +14,10 @@ import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import modelController.*;
+import javax.swing.JLabel;
+import java.awt.Font;
+import java.awt.Color;
+import javax.swing.JScrollPane;
 
 public class ViewView extends JFrame {
 
@@ -22,6 +26,7 @@ public class ViewView extends JFrame {
 	Model model;
 	private JButton btnOk;
 	private JTextArea txtReport;
+	private JLabel lblTitle;
 
 	/**
 	 * Create the frame.
@@ -29,33 +34,47 @@ public class ViewView extends JFrame {
 	public ViewView(Model myModel) 
 	{
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 455, 450);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
-		txtReport = new JTextArea();
-		txtReport.setEditable(false);
-		
 		btnOk = new JButton("OK");
+		
+		lblTitle = new JLabel("Bank Machine Simulation v1.0 >");
+		lblTitle.setForeground(Color.BLUE);
+		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
+		
+		JScrollPane scrollPane = new JScrollPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.LEADING)
+			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(txtReport, GroupLayout.PREFERRED_SIZE, 384, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnOk))
-					.addContainerGap(32, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(2)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnOk)
+								.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 420, GroupLayout.PREFERRED_SIZE))))
+					.addContainerGap(115, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(23)
-					.addComponent(txtReport, GroupLayout.PREFERRED_SIZE, 194, GroupLayout.PREFERRED_SIZE)
-					.addPreferredGap(ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
-					.addComponent(btnOk))
+					.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 316, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
+					.addComponent(btnOk)
+					.addContainerGap(13, Short.MAX_VALUE))
 		);
+		
+		txtReport = new JTextArea();
+		scrollPane.setViewportView(txtReport);
+		txtReport.setEditable(false);
 		contentPane.setLayout(gl_contentPane);
 		
 		model = myModel;

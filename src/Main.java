@@ -3,18 +3,11 @@ import modelController.Model;
 import views.*;
 
 //TODO
-//Delete method on UML,ask if there is destruction to do or something
-//When clic cancel error, no textfied validator to reset (Possible Solution on resetin view reset border color, or maybe just take out the reset of the validator) 
 //Hacer Lista Scrollable
-//Poner formato $0.00 en reporte
-//When select, make it disappear
-//Menu buttons disabled when there is nothing (when done save do this)
-//Validate Withdraw not higher than current amount 
-//SAVE/LOAD save is when quit (ask Sean)
-//Move window listner to controller
+//Validate Withdraw FEEEEEEEE not higher than current amount
+//Move window listner to controller ASK SEAN
 //Only if you have time load the last account you were working with, its because the model starts with the curremtaccount user in 0
-
-
+//ADT
 
 public class Main {
 
@@ -30,5 +23,4 @@ public class Main {
 			Controller controller = new Controller(model,viewMenu,viewCreate,viewDeposit,viewView,viewSelect,viewDelete, viewWithdraw);
 			viewMenu.setVisible(true);
 	}
-
 }

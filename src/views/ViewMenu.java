@@ -21,6 +21,10 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.ContainerAdapter;
+import java.awt.event.ContainerEvent;
+import java.awt.Color;
+import java.awt.Font;
 public class ViewMenu extends JFrame {
 
 	private JPanel contentPane;
@@ -42,6 +46,15 @@ public class ViewMenu extends JFrame {
 	private JLabel lblSaveAndQuit;
 	
 	public ViewMenu(Model myModel) {
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {
+				if(model.loadAccounts())
+				{
+					enableButtons();
+				};
+			}
+		});
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 452, 379);
@@ -51,18 +64,24 @@ public class ViewMenu extends JFrame {
 		setContentPane(contentPane);
 		
 		btnSelect = new JButton("select");
+		btnSelect.setEnabled(false);
 		
 		btnDeposit = new JButton("deposit");
+		btnDeposit.setEnabled(false);
 		
 		btnWithdraw = new JButton("withdraw");
+		btnWithdraw.setEnabled(false);
 		
 		btnCreate = new JButton("create");
 		
 		btnDelete = new JButton("delete");
+		btnDelete.setEnabled(false);
 		
 		btnView = new JButton("view");
+		btnView.setEnabled(false);
 		
 		btnQuit = new JButton("quit");
+		
 		
 		
 		lblNewLabel = new JLabel("Select Account");
@@ -78,34 +97,44 @@ public class ViewMenu extends JFrame {
 		lblViewAccountTransactions = new JLabel("View account transactions");
 		
 		lblSaveAndQuit = new JLabel("Save and Quit");
+		
+		JLabel lblTitle = new JLabel("Bank Machine Simulation v1.0 >");
+		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblTitle.setForeground(Color.BLUE);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(38)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(btnDeposit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnWithdraw, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnCreate, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnDelete, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnView, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnQuit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(btnSelect, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE))
-					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDepositSumTo, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblWithdrawSumFrom, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblCreateAccount, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblDeleteAccount, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblViewAccountTransactions, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblSaveAndQuit, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(38)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
+								.addComponent(btnDeposit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnWithdraw, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnCreate, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnDelete, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnView, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnQuit, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+								.addComponent(btnSelect, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE))
+							.addGap(18)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDepositSumTo, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblWithdrawSumFrom, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblCreateAccount, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblDeleteAccount, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblViewAccountTransactions, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)
+								.addComponent(lblSaveAndQuit, GroupLayout.PREFERRED_SIZE, 181, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(lblTitle)))
 					.addContainerGap(97, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(44)
+					.addComponent(lblTitle)
+					.addGap(31)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnSelect)
 						.addComponent(lblNewLabel))
@@ -170,31 +199,26 @@ public class ViewMenu extends JFrame {
 		btnQuit.addActionListener(quitActionListener);
 	}
 	
-	
-	/*btnOk.addActionListener(new ActionListener() {
-		//Action Event is the click for a button
-    	public void actionPerformed(ActionEvent e) {
-			onSubmit(e);
-		}
-    });
-	
-	btnQuit.addMouseListener(new MouseAdapter() {
-		@Override
-		public void mouseClicked(MouseEvent e) {
-		}
-	});
-    */
 	public void addLoadListener(WindowListener loadWindowsListener)
 	{
 		this.addWindowListener(loadWindowsListener);
 	}
 	
-	/*
-	addWindowListener(new WindowAdapter() {
-		@Override
-		public void windowOpened(WindowEvent e) {
-			model.loadAccounts();
-		}
-	});*/
+	public void enableButtons()
+	{
+		btnSelect.setEnabled(true);
+		btnDeposit.setEnabled(true);
+		btnWithdraw.setEnabled(true);
+		btnDelete.setEnabled(true);
+		btnView.setEnabled(true);
+	}
 	
+	public void disableButtons()
+	{
+		btnSelect.setEnabled(false);
+		btnDeposit.setEnabled(false);
+		btnWithdraw.setEnabled(false);
+		btnDelete.setEnabled(false);
+		btnView.setEnabled(false);
+	}
 }
