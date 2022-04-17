@@ -46,15 +46,7 @@ public class ViewMenu extends JFrame {
 	private JLabel lblSaveAndQuit;
 	
 	public ViewMenu(Model myModel) {
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowOpened(WindowEvent e) {
-				if(model.loadAccounts())
-				{
-					enableButtons();
-				};
-			}
-		});
+		
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 452, 379);
@@ -199,10 +191,7 @@ public class ViewMenu extends JFrame {
 		btnQuit.addActionListener(quitActionListener);
 	}
 	
-	public void addLoadListener(WindowListener loadWindowsListener)
-	{
-		this.addWindowListener(loadWindowsListener);
-	}
+	
 	
 	public void enableButtons()
 	{

@@ -32,6 +32,11 @@ public class Controller {
 	public Controller(Model myModel, ViewMenu myViewMenu, ViewCreate myViewCreate,ViewDeposit myViewDeposit, ViewView myViewView, ViewSelect myViewSelect, ViewDelete myViewDelete,ViewWithdraw myViewWithDraw) 
 	{
 		model = myModel;
+		
+		//model.loadAccounts();
+		
+		
+		
 		viewMenu = myViewMenu;
 		viewCreate = myViewCreate;
 		viewDeposit = myViewDeposit;
@@ -40,6 +45,12 @@ public class Controller {
 		viewDelete =  myViewDelete;
 		viewWithdraw = myViewWithDraw;
 		
+		if(model.loadAccounts())
+		{
+			viewMenu.enableButtons();
+		};
+		
+		
 		viewMenu.addCreateListener((ActionEvent e) -> onClickCreate(e));
 		viewMenu.addDepositActionListener((ActionEvent e) -> onClickDeposit(e));
 		viewMenu.addViewActionListener((ActionEvent e) -> onClickView(e));
@@ -47,7 +58,6 @@ public class Controller {
 		viewMenu.addDeleteActionListener((ActionEvent e) -> onClickDelete(e));
 		viewMenu.addWithdrawActionListener((ActionEvent e) -> onClickWithdraw(e));
 		viewMenu.addQuitActionListener((ActionEvent e) -> onClickQuit(e));
-		//viewMenu.addLoadListener((WindowEvent e) -> onWindowLoad(e));
 		
 		viewCreate.addCancelListener((ActionEvent e) -> onClickCancel(e));
 		viewCreate.addOkListener((ActionEvent e) -> onClickOk(e));
@@ -151,6 +161,7 @@ public class Controller {
 		{
 			model.saveAccounts();
 			viewMenu.dispose();
+			System.exit(0);
 		}
 		else
 		{
@@ -158,10 +169,7 @@ public class Controller {
 		}
 	}
 	
-	public void onWindowLoad(WindowEvent e) 
-	{
-		model.loadAccounts();
-	}
+	
 	//CREATE VIEW
 	//Ok button in Create View
 	public void onClickOk(ActionEvent e) 
