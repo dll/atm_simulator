@@ -1,7 +1,10 @@
 package modelController;
+import java.awt.Color;
 import java.awt.event.*;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 
 import customClasses.TextFieldValidator;
@@ -22,13 +25,18 @@ public class Controller {
 	private ViewDelete viewDelete;
 	private ViewWithdraw viewWithdraw;
 	
-	private final String VALIDDESCPATTERN = "^[a-zA-Z]+$";
-	private final String VALIDAMOUNTPATTERN = "\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d\\.\\d{2}";
-	private final String ERRORMESSAGE = "The description should only be letters and the amount shoul be in money format.";
+	private final String VALIDDESCPATTERN = "^[0-9A-Za-z\\s]+$";
+	private final String VALIDAMOUNTPATTERN = "\\d?\\d?\\d?\\d?\\d?\\d?\\d?\\d\\.\\d\\d";
+	private String errorMessage = "";
 	
 	public Controller(Model myModel, ViewMenu myViewMenu, ViewCreate myViewCreate,ViewDeposit myViewDeposit, ViewView myViewView, ViewSelect myViewSelect, ViewDelete myViewDelete,ViewWithdraw myViewWithDraw) 
 	{
 		model = myModel;
+		
+		//model.loadAccounts();
+		
+		
+		
 		viewMenu = myViewMenu;
 		viewCreate = myViewCreate;
 		viewDeposit = myViewDeposit;
@@ -36,6 +44,12 @@ public class Controller {
 		viewSelect = myViewSelect;
 		viewDelete =  myViewDelete;
 		viewWithdraw = myViewWithDraw;
+		
+		if(model.loadAccounts())
+		{
+			viewMenu.enableButtons();
+		};
+		
 		
 		viewMenu.addCreateListener((ActionEvent e) -> onClickCreate(e));
 		viewMenu.addDepositActionListener((ActionEvent e) -> onClickDeposit(e));
@@ -66,14 +80,26 @@ public class Controller {
 	//----------------------------------------event handlers
 	public boolean validateFields(JTextField myDescription, JTextField myAmount)
 	{
-		tfvDescription = new TextFieldValidator(myDescription);
+		tfvDescription = new TextFieldValidator(myDescription, "STRING");
 		tfvDescription.setRegExp(VALIDDESCPATTERN);
 		
-		tfvAmount = new TextFieldValidator(myAmount);
+		tfvAmount = new TextFieldValidator(myAmount,"MONEY");
 		tfvAmount.setRegExp(VALIDAMOUNTPATTERN);
 
-		tfvDescription.check();
-		tfvAmount.check();
+		
+		if(!tfvDescription.check())
+		{
+			errorMessage = "The description should only be letters and numbers.";
+		}
+		if(!tfvAmount.check())
+		{
+			errorMessage = "The amount should be in money format with the proper value.";
+		}
+		if(!tfvDescription.check() && !tfvAmount.check())
+		{
+			errorMessage = "The description should only be letters or number and the amount should be in money format.";
+		}
+		
 		
 		if(tfvDescription.check() && tfvAmount.check())
 		{
@@ -131,8 +157,18 @@ public class Controller {
 	
 	public void onClickQuit(ActionEvent e) 
 	{
-		viewMenu.dispose();
+		if(model.getAccounts().size() > 0)
+		{
+			model.saveAccounts();
+			viewMenu.dispose();
+			System.exit(0);
+		}
+		else
+		{
+			viewMenu.dispose();
+		}
 	}
+	
 	
 	//CREATE VIEW
 	//Ok button in Create View
@@ -153,20 +189,29 @@ public class Controller {
 			model.createAccount(description, startingBalance,accountType);
 				
 			viewCreate.reset();
+			viewMenu.enableButtons();
 			viewCreate.setVisible(false);
 			viewMenu.setVisible(true);	
 		}
 		else
 		{
-			viewCreate.setError(ERRORMESSAGE);
+			viewCreate.setError(errorMessage);
 		}
 		
 	}
 	//Cancel button from the Create View
 	public void onClickCancel(ActionEvent e) 
 	{
-		tfvDescription.reset();
-		tfvAmount.reset();
+		if (tfvDescription != null)
+		{
+			tfvDescription.reset();
+		}
+		if (tfvAmount != null)
+		{
+			tfvAmount.reset();
+		}
+		
+		
 		viewCreate.reset();
 		viewCreate.setVisible(false);
 		viewMenu.setVisible(true);
@@ -193,14 +238,21 @@ public class Controller {
 		}
 		else
 		{
-			viewDeposit.setError(ERRORMESSAGE);
+			viewDeposit.setError(errorMessage);
 		}
 	}
 	
 	public void onClickCancelDeposit(ActionEvent e) 
 	{
-		tfvDescription.reset();
-		tfvAmount.reset();
+		if (tfvDescription != null)
+		{
+			tfvDescription.reset();
+		}
+		if (tfvAmount != null)
+		{
+			tfvAmount.reset();
+		}
+		
 		viewDeposit.reset();
 		viewDeposit.setVisible(false);
 		viewMenu.setVisible(true);
@@ -218,13 +270,11 @@ public class Controller {
 	//Ok button in view select
 	public void onClickOkSelect(ActionEvent e)
 	{
-		System.out.println();
-		
 		if(viewSelect.getAccountSelectedIndex() != -1)
 		{
 			viewSelect.setError("");
 			model.setCurrentAccountIndex(viewSelect.getAccountSelectedIndex());
-			viewView.setVisible(false);
+			viewSelect.setVisible(false);
 			viewMenu.setVisible(true);
 		}
 		else
@@ -248,6 +298,13 @@ public class Controller {
 		model.deleteAccount();
 		System.out.println(model.getAccounts().size()-1);
 		model.setCurrentAccountIndex(model.getAccounts().size()-1);
+		
+		//delete file content if no accounts exist
+		if(model.accounts.size()==0)
+		{
+			model.deleteFileContent();
+			viewMenu.disableButtons();
+		}
 		viewDelete.setVisible(false);
 		viewMenu.setVisible(true);
 	}
@@ -263,7 +320,10 @@ public class Controller {
 	//OK button in deposit view
 	public void onClickOkWithdraw(ActionEvent e)
 	{
-		if(validateFields(viewWithdraw.getDescription(),viewWithdraw.getAmount()))
+		boolean withrawValidated = false;
+		
+		
+		if (validateFields(viewWithdraw.getDescription(),viewWithdraw.getAmount()) && model.validateAmountWithdraw(viewWithdraw.getAmount().getText()))
 		{
 			String depositAmount =  viewWithdraw.getAmount().getText();
 			String description = viewWithdraw.getDescription().getText(); 
@@ -276,15 +336,30 @@ public class Controller {
 		}
 		else
 		{
-			viewWithdraw.setError(ERRORMESSAGE);
+			if (validateFields(viewWithdraw.getDescription(),viewWithdraw.getAmount()))
+			{
+				viewWithdraw.getAmount().setBorder(BorderFactory.createLineBorder(Color.RED));
+				viewWithdraw.setError("The withdraw amount should be lower than the current amount");
+			}
+			else
+			{
+				viewWithdraw.setError(errorMessage);
+			}
+			
 		}
 	}
 	
 	public void onClickCancelWithdraw(ActionEvent e) 
 	{
+		if (tfvDescription != null)
+		{
+			tfvDescription.reset();
+		}
+		if (tfvAmount != null)
+		{
+			tfvAmount.reset();
+		}
 		
-		tfvDescription.reset();
-		tfvAmount.reset();
 		viewWithdraw.reset();
 		viewWithdraw.setVisible(false);
 		viewMenu.setVisible(true);

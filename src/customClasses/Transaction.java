@@ -2,7 +2,7 @@ package customClasses;
 import java.time.LocalDateTime;
 import java.util.Date;
 
-public class Transaction 
+public class Transaction implements java.io.Serializable
 {
 	private double amount;
 	private String description;

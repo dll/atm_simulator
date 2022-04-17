@@ -17,6 +17,7 @@ import javax.swing.JButton;
 
 import modelController.Model;
 import java.awt.Color;
+import java.awt.Font;
 
 public class ViewWithdraw extends JFrame {
 
@@ -27,13 +28,14 @@ public class ViewWithdraw extends JFrame {
 	private JButton btnOk;
 	private JButton btnCancel;
 	private JLabel lblError;
+	private JLabel lblTitle;
 
 	/**
 	 * Create the frame.
 	 */
 	public ViewWithdraw(Model myModel) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 518, 300);
+		setBounds(100, 100, 630, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -54,13 +56,19 @@ public class ViewWithdraw extends JFrame {
 		
 		lblError = new JLabel("");
 		lblError.setForeground(Color.RED);
+		
+		lblTitle = new JLabel("Bank Machine Simulation v1.0 >");
+		lblTitle.setForeground(Color.BLUE);
+		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGap(28)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblError, GroupLayout.DEFAULT_SIZE, 568, Short.MAX_VALUE)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(28)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
 								.addComponent(lblTransaction, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 								.addComponent(lblAmount, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 149, Short.MAX_VALUE))
@@ -71,16 +79,15 @@ public class ViewWithdraw extends JFrame {
 									.addGap(31)
 									.addComponent(btnCancel))
 								.addComponent(txtAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtDescription, GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(lblError, GroupLayout.PREFERRED_SIZE, 481, GroupLayout.PREFERRED_SIZE)))
+								.addComponent(txtDescription, GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE))))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(21)
+					.addContainerGap()
+					.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.UNRELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblAmount)
 						.addComponent(txtAmount, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
@@ -92,9 +99,9 @@ public class ViewWithdraw extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(btnOk)
 						.addComponent(btnCancel))
-					.addGap(35)
+					.addGap(34)
 					.addComponent(lblError, GroupLayout.PREFERRED_SIZE, 32, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(57, Short.MAX_VALUE))
+					.addContainerGap(58, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 		

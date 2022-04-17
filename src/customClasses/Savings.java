@@ -3,7 +3,8 @@ package customClasses;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class Savings extends Account {
+public class Savings extends Account implements java.io.Serializable 
+{
 	private final static double FEE = 0.50;
 	
 	public Savings(String myDescription)

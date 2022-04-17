@@ -20,6 +20,7 @@ import javax.swing.AbstractListModel;
 import modelController.*;
 import javax.swing.ListSelectionModel;
 import java.awt.Color;
+import java.awt.Font;
 
 public class ViewCreate extends JFrame {
 
@@ -34,6 +35,7 @@ public class ViewCreate extends JFrame {
 	private JButton btnOk;
 	private JList lstAccountType;
 	private JLabel lblError;
+	private JLabel lblTitle;
 	
 
 	/**
@@ -41,7 +43,7 @@ public class ViewCreate extends JFrame {
 	 */
 	public ViewCreate(Model myModel) {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 576, 300);
+		setBounds(100, 100, 630, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -77,6 +79,10 @@ public class ViewCreate extends JFrame {
 		
 		lblError = new JLabel("");
 		lblError.setForeground(Color.RED);
+		
+		lblTitle = new JLabel("Bank Machine Simulation v1.0 >");
+		lblTitle.setForeground(Color.BLUE);
+		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -85,29 +91,34 @@ public class ViewCreate extends JFrame {
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addComponent(lblAccountType, GroupLayout.PREFERRED_SIZE, 114, GroupLayout.PREFERRED_SIZE)
-							.addGap(18))
+							.addPreferredGap(ComponentPlacement.UNRELATED))
 						.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-							.addComponent(lblStartBalance, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-							.addComponent(lblAccountDescription, GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)))
+							.addComponent(lblStartBalance, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+							.addComponent(lblAccountDescription, GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)))
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(lstAccountType, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(38)
 							.addComponent(btnOk, GroupLayout.PREFERRED_SIZE, 65, GroupLayout.PREFERRED_SIZE)
 							.addGap(18)
 							.addComponent(btnCancel))
 						.addComponent(txtStartingBalance, GroupLayout.PREFERRED_SIZE, 57, GroupLayout.PREFERRED_SIZE)
-						.addComponent(txtDescription, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lstAccountType, GroupLayout.PREFERRED_SIZE, 152, GroupLayout.PREFERRED_SIZE))
-					.addGap(36))
+						.addComponent(txtDescription, GroupLayout.PREFERRED_SIZE, 296, GroupLayout.PREFERRED_SIZE))
+					.addGap(166))
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addGap(61)
-					.addComponent(lblError, GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
+					.addComponent(lblError, GroupLayout.DEFAULT_SIZE, 535, Short.MAX_VALUE)
 					.addContainerGap())
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(362, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addContainerGap()
+					.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+					.addGap(16)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblAccountType)
 						.addComponent(lstAccountType, GroupLayout.DEFAULT_SIZE, 70, Short.MAX_VALUE))

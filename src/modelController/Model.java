@@ -29,7 +29,7 @@ public class Model {
 		return accounts;
 	}
 	
-	//Function that returns the descriptions of the accounts
+	//Function that returns the descriptions of the accounts in the model of the list
 	public DefaultListModel getAccountDescriptions()
 	{
 		DefaultListModel listModel;
@@ -104,15 +104,17 @@ public class Model {
 		
 		strOutput += "Account Type: " + accountType + "\n";
 		
-		strOutput += "Current Balance: $" +  accounts.get(currentAccountIndex).getCurrentBalance();
+		strOutput += "Current Balance: $" + String.format("%-9.2f",accounts.get(currentAccountIndex).getCurrentBalance());
 		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");  
+		//strOutput += "Current Balance: $" +  accounts.get(currentAccountIndex).getCurrentBalance();
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss yyyy");  
 		
 		for (int n=0; n < accounts.get(currentAccountIndex).getTransactions().size(); n++) 
 		{
 			strOutput += "\n";
 			strOutput += dtf.format(accounts.get(currentAccountIndex).getTransactions().get(n).getDate());
-			strOutput += " $" + accounts.get(currentAccountIndex).getTransactions().get(n).getAmount();
+			strOutput += ": $" + String.format("%-9.2f",accounts.get(currentAccountIndex).getTransactions().get(n).getAmount());
 			strOutput += " [";
 			strOutput += accounts.get(currentAccountIndex).getTransactions().get(n).getDescription();
 			strOutput += "]";
@@ -131,7 +133,49 @@ public class Model {
 		accounts.remove(currentAccountIndex);
 	}
 	
-	//-------------------------------------------------private methods
+	
+	//Function that saves accounts on file through FileManager custom class
+	public void saveAccounts()
+	{
+		FileManager.getInstance().setFileName("accounts.dat");
+		FileManager.getInstance().save(accounts);
+	}
+	
+	//Function that loads accounts from file through FileManager custom class
+	public boolean loadAccounts()
+	{
+		FileManager.getInstance().setFileName("accounts.dat");
+		
+		if(FileManager.getInstance().load()!=null)
+		{
+			accounts = FileManager.getInstance().load();
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	
+	//Function that deletes all of the content of a file
+	public void deleteFileContent()
+	{
+		FileManager.getInstance().setFileName("accounts.dat");
+		FileManager.getInstance().deleteFileContent();
+	}
+	
+	//Function that validates amount in withdraw
+	public boolean validateAmountWithdraw(String myAmount)
+	{
+		if(accounts.get(currentAccountIndex).getCurrentBalance() < Double.parseDouble(myAmount))
+		{
+			return false;
+		}
+		else
+		{
+			return true;
+		}
+	}
 	
 	
 

@@ -3,6 +3,7 @@ package customClasses;
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JTextField;
 
 public class TextFieldValidator 
@@ -13,26 +14,28 @@ public class TextFieldValidator
 	private Color errorColor;
 	/** The field to be validated*/
 	private JTextField target;
+	private String type;
 	
 	/**Constructor that receives the textfield and the color to use in case of validation does not pass
 	 @param myTarget the textfield to validate
 	 @param myErrorColor the color to use in case of validation does not pass
 	  */
-	public TextFieldValidator(JTextField myTarget, Color myErrorColor)
+	public TextFieldValidator(JTextField myTarget, Color myErrorColor, String myType)
 	{
 		regExp = "\\w";
 		target = myTarget;
 		errorColor = myErrorColor;
+		type = myType;
 	};
 	
 	
 	/**Constructor that receives the textfield, sets default color to RED
 	 @param myTarget the textfield to validate
 	 */
-	public TextFieldValidator(JTextField myTarget)
+	public TextFieldValidator(JTextField myTarget, String myType)
 	{
 		
-		this(myTarget,Color.RED);
+		this(myTarget,Color.RED, myType);
 		
 	};
 	
@@ -61,16 +64,41 @@ public class TextFieldValidator
      */
 	public Boolean check() 
 	{
-		if(target.getText().matches(regExp))
+		if(type == "MONEY")
 		{
-			target.setBorder(null);
-			return true;
+			if(target.getText().matches(regExp))
+			{
+				if(Double.parseDouble(target.getText())>0)
+				{
+					target.setBorder(null);
+					return true;
+				}
+				else
+				{
+					target.setBorder(BorderFactory.createLineBorder(errorColor));
+					return false;
+				}
+			}
+			else
+			{
+				target.setBorder(BorderFactory.createLineBorder(errorColor));
+				return false;
+			}
 		}
 		else
 		{
-			target.setBorder(BorderFactory.createLineBorder(errorColor));
-			return false;
+			if(target.getText().matches(regExp))
+			{
+				target.setBorder(null);
+				return true;
+			}
+			else
+			{
+				target.setBorder(BorderFactory.createLineBorder(errorColor));
+				return false;
+			}
 		}
+		
 	}
 	
 	/**

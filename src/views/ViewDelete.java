@@ -15,6 +15,8 @@ import java.awt.Color;
 import javax.swing.JButton;
 
 import modelController.Model;
+import java.awt.Font;
+import javax.swing.LayoutStyle.ComponentPlacement;
 
 public class ViewDelete extends JFrame {
 
@@ -23,6 +25,7 @@ public class ViewDelete extends JFrame {
 	private Model model;
 	private JButton btnCancel;
 	private JLabel lblCurrentAccount;
+	private JLabel lblTitle;
 	
 	public ViewDelete(Model myModel) 
 	{
@@ -40,6 +43,10 @@ public class ViewDelete extends JFrame {
 		btnDelete = new JButton("Delete");
 		
 		btnCancel = new JButton("Cancel");
+		
+		lblTitle = new JLabel("Bank Machine Simulation v1.0 >");
+		lblTitle.setForeground(Color.BLUE);
+		lblTitle.setFont(new Font("Tahoma", Font.BOLD, 14));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -47,18 +54,21 @@ public class ViewDelete extends JFrame {
 					.addGap(29)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
 						.addComponent(btnDelete)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(lblDelete, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
-							.addGap(27)
-							.addComponent(lblCurrentAccount, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE)))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+							.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 234, GroupLayout.PREFERRED_SIZE)
+							.addGroup(gl_contentPane.createSequentialGroup()
+								.addComponent(lblDelete, GroupLayout.PREFERRED_SIZE, 128, GroupLayout.PREFERRED_SIZE)
+								.addGap(27)
+								.addComponent(lblCurrentAccount, GroupLayout.PREFERRED_SIZE, 45, GroupLayout.PREFERRED_SIZE))))
 					.addGap(18)
 					.addComponent(btnCancel)
-					.addContainerGap(94, Short.MAX_VALUE))
+					.addContainerGap(116, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGap(26)
+					.addComponent(lblTitle, GroupLayout.PREFERRED_SIZE, 17, GroupLayout.PREFERRED_SIZE)
+					.addGap(9)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblDelete)
 						.addComponent(lblCurrentAccount))
@@ -67,7 +77,7 @@ public class ViewDelete extends JFrame {
 						.addComponent(btnDelete)
 						.addComponent(btnCancel))
 					.addContainerGap(175, Short.MAX_VALUE))
-				);
+		);
 		contentPane.setLayout(gl_contentPane);
 		model = myModel;
 	}
