@@ -68,6 +68,7 @@ public class TextFieldValidator
 		{
 			if(target.getText().matches(regExp))
 			{
+				
 				if(Double.parseDouble(target.getText())>0)
 				{
 					target.setBorder(null);
@@ -100,6 +101,51 @@ public class TextFieldValidator
 		}
 		
 	}
+	/**
+     * Validates if text field passes the validation
+     * @return true if text field passes the validation and false if it does not pass
+     */
+	public Boolean checkWithdraw(double balance, double fee) 
+	{
+		if(type == "MONEY")
+		{
+			if(target.getText().matches(regExp))
+			{
+				System.out.println(Double.parseDouble(target.getText()));
+				if(Double.parseDouble(target.getText())>0 && Double.parseDouble(target.getText())<=(balance - fee))
+				{
+					target.setBorder(null);
+					return true;
+				}
+				else
+				{
+					target.setBorder(BorderFactory.createLineBorder(errorColor));
+					return false;
+				}
+			}
+			else
+			{
+				target.setBorder(BorderFactory.createLineBorder(errorColor));
+				return false;
+			}
+		}
+		else
+		{
+			if(target.getText().matches(regExp))
+			{
+				target.setBorder(null);
+				return true;
+			}
+			else
+			{
+				target.setBorder(BorderFactory.createLineBorder(errorColor));
+				return false;
+			}
+		}
+		
+	}
+	
+	
 	
 	/**
      * Resets text field to default color

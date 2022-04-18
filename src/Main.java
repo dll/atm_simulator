@@ -3,8 +3,7 @@ import modelController.Model;
 import views.*;
 
 //TODO
-//Validate Withdraw FEEEEEEEE not higher than current amount
-//ADT
+//ADT time format
 
 public class Main {
 
@@ -18,6 +17,6 @@ public class Main {
 			ViewDelete viewDelete = new ViewDelete(model);
 			ViewWithdraw viewWithdraw = new ViewWithdraw(model);
 			Controller controller = new Controller(model,viewMenu,viewCreate,viewDeposit,viewView,viewSelect,viewDelete, viewWithdraw);
-			viewMenu.setVisible(true);
+			
 	}
 }
