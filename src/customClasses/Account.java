@@ -10,16 +10,15 @@ public abstract class Account implements java.io.Serializable
 	//Protected for it to be accessible anywhere
 	protected String description;
 	protected double currentBalance;
-	//private Transaction transaction; 
 	
-	ArrayList<Transaction> transactions;
+	protected ArrayList<Transaction> transactions;
 	
 	
 	public Account(String myDescription)
 	{
 		description = myDescription;
 		currentBalance = 0;
-		//transaction = new Transaction();
+		
 		transactions = new ArrayList<Transaction>();
 	}
 	//--------------------------get/sets
@@ -47,12 +46,13 @@ public abstract class Account implements java.io.Serializable
 		return transactions;
 	}
 	
+	
+	//Deposit transaction
 	public void deposit(String myAmount, String myDescription)
 	{
-		//DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss yyyy");
-		LocalDateTime now = LocalDateTime.now(); 
 		
+		//Get todays date
+		LocalDateTime now = LocalDateTime.now(); 
 		
 		currentBalance += Double.parseDouble(myAmount);
 		Transaction transaction = new Transaction();
@@ -64,7 +64,15 @@ public abstract class Account implements java.io.Serializable
 	
 	
 	//---------------------------------------abstract methods
-    public abstract void withdraw(String myAmount, String myDescription);
+    
+	//Withdraw method
+	public abstract void withdraw(String myAmount, String myDescription);
+    
+	//Method to get Fee
+	public abstract Double getFee();
+	
+	
+    
 	
 	
 }

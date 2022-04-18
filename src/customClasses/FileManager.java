@@ -39,19 +39,16 @@ public class FileManager {
 			//this stream object does the writing into the file
 			FileOutputStream fileStream = new FileOutputStream(file);
 			
-			//this stream object dose the converting of the data into the correct format to write to the file
+			//this stream object does the converting of the data into the correct format to write to the file
 			ObjectOutputStream dataStream = new ObjectOutputStream(fileStream);
 			
-			//serialize and write Bicycle object to the file
-			
-			
+			//loop and save all accounts in list
 			for(int i=0; i<myAccounts.size(); i++)
 			{
 				dataStream.writeObject(myAccounts.get(i));
 			}
 			
-			
-			//if not closed there might be data in a buffer that didn't pass yet, this flushes
+			//close datastream
 			dataStream.close();
 		} 
 		catch(Exception e)
@@ -61,7 +58,7 @@ public class FileManager {
 		
 	}
 	
-	//returns Object so pretty much anything
+	//returns Object or null in case it does not find data
 	public ArrayList<Account> load()
 	{
 		
@@ -72,6 +69,7 @@ public class FileManager {
 		{
 			File file = new File(filename);
 			
+			//if the file exits
 			if (file.exists())
 			{
 				FileInputStream fileStream = new FileInputStream(file);
@@ -81,10 +79,11 @@ public class FileManager {
 			    Account account =null;
 	
 			    boolean flag = true;
-	
+			    //go through file retrieving the objects
 			    while(flag){
 			        if(fileStream.available() != 0)
 			        {
+			        	//datacast to account 
 			        	account = (Account)(dataStream.readObject());    
 			        	myObjectsArray.add(account);
 			        }

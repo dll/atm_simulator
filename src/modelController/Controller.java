@@ -50,6 +50,8 @@ public class Controller {
 			viewMenu.enableButtons();
 		};
 		
+		viewMenu.setVisible(true);
+		
 		
 		viewMenu.addCreateListener((ActionEvent e) -> onClickCreate(e));
 		viewMenu.addDepositActionListener((ActionEvent e) -> onClickDeposit(e));
@@ -77,7 +79,8 @@ public class Controller {
 		viewWithdraw.addCancelActionListener((ActionEvent e) -> onClickCancelWithdraw(e));
 	}
 	
-	//----------------------------------------event handlers
+	
+	//Function that validate the fields of create and deposit
 	public boolean validateFields(JTextField myDescription, JTextField myAmount)
 	{
 		tfvDescription = new TextFieldValidator(myDescription, "STRING");
@@ -97,7 +100,7 @@ public class Controller {
 		}
 		if(!tfvDescription.check() && !tfvAmount.check())
 		{
-			errorMessage = "The description should only be letters or number and the amount should be in money format.";
+			errorMessage = "The description should only be letters or numbers and the amount should be in money format.";
 		}
 		
 		
@@ -111,6 +114,41 @@ public class Controller {
 			
 	}
 	
+	//Function that validate the fields of create and deposit
+		public boolean validateWithdraw(JTextField myDescription, JTextField myAmount)
+		{
+			tfvDescription = new TextFieldValidator(myDescription, "STRING");
+			tfvDescription.setRegExp(VALIDDESCPATTERN);
+			
+			tfvAmount = new TextFieldValidator(myAmount,"MONEY");
+			tfvAmount.setRegExp(VALIDAMOUNTPATTERN);
+
+			
+			if(!tfvDescription.checkWithdraw(model.getCurrentAccountBalance(),model.getCurrentAccountFee()))
+			{
+				errorMessage = "The description should only be letters and numbers.";
+			}
+			if(!tfvAmount.checkWithdraw(model.getCurrentAccountBalance(),model.getCurrentAccountFee()))
+			{
+				errorMessage = "The amount should be in money format with the proper value.";
+			}
+			if(!tfvDescription.checkWithdraw(model.getCurrentAccountBalance(),model.getCurrentAccountFee()) && !tfvAmount.checkWithdraw(model.getCurrentAccountBalance(),model.getCurrentAccountFee()))
+			{
+				errorMessage = "The description should only be letters or numbers and the amount should be in money format.";
+			}
+			
+			
+			if(tfvDescription.checkWithdraw(model.getCurrentAccountBalance(),model.getCurrentAccountFee()) && tfvAmount.checkWithdraw(model.getCurrentAccountBalance(),model.getCurrentAccountFee()))
+			{
+				tfvDescription.reset();
+				tfvAmount.reset();
+				return true;
+			}
+			return false;
+				
+		}
+	
+	//----------------------------------------EVENT HANDLERS
 	
 	//MENU
 	//Create button from the Menu View
@@ -320,10 +358,7 @@ public class Controller {
 	//OK button in deposit view
 	public void onClickOkWithdraw(ActionEvent e)
 	{
-		boolean withrawValidated = false;
-		
-		
-		if (validateFields(viewWithdraw.getDescription(),viewWithdraw.getAmount()) && model.validateAmountWithdraw(viewWithdraw.getAmount().getText()))
+		if (validateWithdraw(viewWithdraw.getDescription(),viewWithdraw.getAmount()))
 		{
 			String depositAmount =  viewWithdraw.getAmount().getText();
 			String description = viewWithdraw.getDescription().getText(); 
@@ -336,16 +371,7 @@ public class Controller {
 		}
 		else
 		{
-			if (validateFields(viewWithdraw.getDescription(),viewWithdraw.getAmount()))
-			{
-				viewWithdraw.getAmount().setBorder(BorderFactory.createLineBorder(Color.RED));
-				viewWithdraw.setError("The withdraw amount should be lower than the current amount");
-			}
-			else
-			{
-				viewWithdraw.setError(errorMessage);
-			}
-			
+			viewWithdraw.setError(errorMessage);
 		}
 	}
 	

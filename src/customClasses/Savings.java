@@ -13,13 +13,13 @@ public class Savings extends Account implements java.io.Serializable
 	}
 	
 	
-	//mandatory method because defined as abstract in parent
+	//mandatory methods because defined as abstract in parent
+	
 	public void withdraw(String myAmount, String myDescription)
 	{
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
 		LocalDateTime now = LocalDateTime.now(); 
 		
-		 
 		currentBalance = currentBalance - (Double.parseDouble(myAmount) + FEE) ;
 		Transaction transaction = new Transaction();
 		transaction.setAmount(-Double.parseDouble(myAmount) - FEE );
@@ -28,5 +28,9 @@ public class Savings extends Account implements java.io.Serializable
 		transactions.add(transaction);
 	}
 	
+	public Double getFee()
+	{
+		return FEE;
+	}
 	
 }

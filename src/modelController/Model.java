@@ -1,5 +1,7 @@
 package modelController;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
@@ -44,12 +46,15 @@ public class Model {
 		return listModel;
 	}
 	
+	//Function that sets current account index
 	public void setCurrentAccountIndex(int myCurrentAccountIndex)
 	{
 		currentAccountIndex = myCurrentAccountIndex;
 	}
 	
 	//------------------------------------------------public methods
+	
+	//create account
 	public void createAccount(String description, String amount, String Type)
 	{
 		if(Type == "Savings Account")
@@ -68,16 +73,19 @@ public class Model {
 		}
 	}
 	
+	//deposit in current account
 	public void deposit(String description, String amount)
 	{
 		accounts.get(currentAccountIndex).deposit(description, amount);
 	}
 	
+	//withdraw in current account
 	public void withdraw(String description, String amount)
 	{
 		accounts.get(currentAccountIndex).withdraw(description, amount);
 	}
 	
+	//Report tranactions of currentaccount index
 	public String reportCurrentAccountTransactions()
 	{
 		
@@ -106,10 +114,11 @@ public class Model {
 		
 		strOutput += "Current Balance: $" + String.format("%-9.2f",accounts.get(currentAccountIndex).getCurrentBalance());
 		
-		//strOutput += "Current Balance: $" +  accounts.get(currentAccountIndex).getCurrentBalance();
 		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss yyyy");  
+		//format time for output
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss yyyy z").withZone(ZoneId.of("America/Halifax"));  
 		
+		//loop trough all transactions
 		for (int n=0; n < accounts.get(currentAccountIndex).getTransactions().size(); n++) 
 		{
 			strOutput += "\n";
@@ -123,11 +132,13 @@ public class Model {
 		return strOutput;
 	}
 	
+	//return current account description
 	public String getCurrentAccountDesctiption()
 	{
 		return accounts.get(currentAccountIndex).getDescription();
 	}
 	
+	//delete current account
 	public void deleteAccount()
 	{
 		accounts.remove(currentAccountIndex);
@@ -164,21 +175,18 @@ public class Model {
 		FileManager.getInstance().deleteFileContent();
 	}
 	
-	//Function that validates amount in withdraw
-	public boolean validateAmountWithdraw(String myAmount)
+	//return current account balance
+	public double getCurrentAccountBalance()
 	{
-		if(accounts.get(currentAccountIndex).getCurrentBalance() < Double.parseDouble(myAmount))
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
+		return accounts.get(currentAccountIndex).getCurrentBalance();
 	}
 	
 	
-
+	//return current account fee
+	public double getCurrentAccountFee()
+	{
+		return accounts.get(currentAccountIndex).getFee();
+	}
 	
 	
 }

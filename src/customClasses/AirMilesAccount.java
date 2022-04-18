@@ -22,7 +22,8 @@ public class AirMilesAccount extends Account implements java.io.Serializable
 	}
 	
 	//------------------------PRIVATE METHODS
-	//mandatory method because defined as abstract in parent
+	//mandatory methods because defined as abstract in parent
+	
 	public void withdraw(String myAmount, String myDescription)
 	{
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
@@ -37,10 +38,14 @@ public class AirMilesAccount extends Account implements java.io.Serializable
 		transactions.add(transaction);
 	}
 	
+	public Double getFee()
+	{
+		return FEE;
+	}
+	
 	//override deposit method from parent
 	public void deposit(String myAmount, String myDescription)
 	{
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("E MMM dd HH:mm:ss yyyy");  
 		LocalDateTime now = LocalDateTime.now(); 
 				
 		int airmilesToAdd = (int) (Double.parseDouble(myAmount) / 30);
